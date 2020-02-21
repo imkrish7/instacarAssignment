@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": " mocha --timeout 10000",
+    "client-install": "npm install --prefix client",
     "start": "nodemon index.js",
     "server": "nodemon index.js",
     "client": "npm start --prefix client",
