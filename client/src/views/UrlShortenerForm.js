@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import Modal from './Modal';
+import { createLongUrl } from '../actions/userActions';
+import { connect } from 'react-redux';
 import Style from '../sass/urlshortenerform.module.scss';
 class UrlShortenerForm extends Component{
 
 	constructor(props){
 		super(props);
 		this.state = {
-
+			error: false,
+			longUrl: '',
+			customUrl: '',
+			modal: false,
 		}
-	}
-
-	componentDidMount(){
-		const url = 'http://localhost:5000/api/add'
-		axios.get(url).then(res=>{
-			console.log(res);
-		}).catch(error =>{
-			console.log(error);
-		})
 	}
 
 	handleChange = (e)=>{
@@ -27,20 +23,76 @@ class UrlShortenerForm extends Component{
 		})
 	}
 
+	closeModal = () => {
+		this.setState({
+			modal: false
+		})
+	}
+
+	handleSubmit = () => {
+		if(this.state.longUrl.length > 0){
+			const params = {
+				longUrl: this.state.longUrl,
+				customUrl: this.state.customUrl
+			}
+			this.setState({
+				modal: true
+			})
+			this.props.createLongUrl(params);
+		}else{
+			this.setState({
+				error: true
+			})
+		}
+
+	}
+
+	componentWillReceiveProps(nextProps){
+		console.log(nextProps);
+	}
+
 	render(){
 		return <div className={Style.container}>
 				<div className={Style.header}>Enter url</div>
 				<div className={Style.form}>
-					<input required value={this.state.longUrl} onChange={this.handleChange} name="longUrl" className={Style.input} placeholder={'Enter your long url'} />
-					<input value={this.state.customUrl} onChange={this.handleChange} name="customUrl" className={Style.input} placeholder="Enter custom url (optional)" />
+					<div className={Style.inputWrapper}>
+						<input required value={this.state.longUrl} onChange={this.handleChange} name="longUrl" className={Style.input} />
+						<label className={Style.label}>
+							<span className={Style.content}>Long Url</span>
+						</label>
+					</div>
+					<div className={Style.inputWrapper}>
+						<input required value={this.state.customUrl} onChange={this.handleChange} name="customUrl" className={Style.input} />
+						<label className={Style.label}>
+							<span className={Style.content}>Custome Url</span>
+						</label>
+					</div>
 					<div className={Style.btnWrapper}>
-						<button type="submit" className={Style.btn}>
+						<button type="submit" className={Style.btn} onClick={this.handleSubmit}>
 							Submit
 						</button>
 					</div>
 				</div>
+				{this.props.createLongUrlResponse.data && this.props.createLongUrlResponse.data.success && <Modal toggle={this.closeModal} isOpen={this.state.modal}>
+						{' '}<p className={Style.success}>Success</p>{' '}
+					</Modal>}
+				{this.props.createLongUrlResponse.error && this.props.createLongUrlResponse.error.data && !this.props.createLongUrlResponse.error.data.data.success && <Modal toggle={this.closeModal} isOpen={this.state.modal}>
+						{' '}<p className={Style.fail}>Something went Wrong</p>{' '}
+					</Modal>}
 			</div>;
 	}
 }
 
-export default UrlShortenerForm;
+const mapDispatchToProps = dispatch => {
+	return {
+		createLongUrl: params => dispatch(createLongUrl(params))
+	}
+}
+
+const mapStateToProps = state => {
+	return{
+		createLongUrlResponse: state.createLongUrlResponse
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UrlShortenerForm);

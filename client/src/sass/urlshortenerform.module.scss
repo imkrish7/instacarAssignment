@@ -1,5 +1,5 @@
 .container{
-	flex: 0 0 50%;
+	width: 40%;
 	box-shadow: 0px 0px 4px 0px #ccc;
 	padding: 1rem;
 	display: flex;
@@ -17,17 +17,63 @@
 .form{
 	display: flex;
 	flex-direction: column;
-	padding: 1rem;
+	// padding: 1rem;
+}
+
+.inputWrapper{
+	margin: 1rem 0rem;
+	width: 100%;
+	position: relative;
+	height: 50px;
+	overflow: hidden;
 }
 
 .input{
-	margin: 1rem 0rem;
 	border: none;
+	width: 100%;
+	height: 100%;
+	outline: none;
+	padding-top: 1rem;
 	font-size: 1rem;
-	padding: 0.5rem;
-	box-shadow: 1px 4px 4px 0px #ccc;
-	
 } 
+.label{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	border-bottom: 1px solid #000;
+}
+
+.label::after{
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-bottom: 3px solid brown;
+	left: 0;
+	transform: translateX(-100%);
+	transition: all 0.3s ease;
+}
+
+.content{
+	position: absolute;
+	bottom: 5px;
+	left: 0;
+	transition: all 0.3s ease;
+}
+
+.input:focus + .label .content, .input:valid + .label .content{
+	transform: translateY(-150%);
+	color: brown;
+}
+
+.input:focus + .label::after, .input:valid + .label::after{
+
+	transform: translateX(0%);
+}
+
 .btn{
 	border: none;
 	background: brown;
@@ -36,4 +82,11 @@
 	padding: 0.5rem 1rem;
 	box-shadow: 0px 0px 4px 0px #ccc;
 	font-weight: 700;
+}
+
+.success{
+	color: green;
+}
+.fail{
+	color: red;
 }

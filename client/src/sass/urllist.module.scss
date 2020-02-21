@@ -1,0 +1,32 @@
+.container{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	margin: 1rem 0rem;
+}
+.list{
+	list-style-type: none;
+	padding: 0;
+
+}
+.list_item{
+	color: #000;
+	margin: 1rem 0rem;
+	font-size: 1rem;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	background: #ccc;
+	box-shadow: inset 0px -2px 8px 0px #a0a0a0;
+	a{
+		text-decoration: none;
+	}
+}
+.header{
+	text-align: center;
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+.subHeader{
+	margin: 1rem 0rem;
+	
+}
