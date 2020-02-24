@@ -8,13 +8,12 @@ const redis = require('redis');
 const Promisify = require('bluebird');
 const app = express();
 
-const isDev = process.env.NODE_ENV;
+const isDev = process.env.NODE_ENV ? process.env.NODE_ENV : "production";
 const userRouter = require('./routes/userRoutes');
 
 const client = redis.createClient(config.redis_port);
 
 const redis_client = Promisify.promisifyAll(client);
-console.log(isDev);
 mongoose.connect(config.mongo_uri[isDev], { useNewUrlParser: true });
 
 mongoose.connection.on('error', error => {
@@ -37,7 +36,7 @@ app.use(redisClient);
 
 
 app.use('/api', userRouter);
-if (isDev != 'development') {
+if (isDev == undefined) {
 	app.use(express.static(path.join(__dirname, 'client/build')));
 
 	app.get('*', function(req, res) {
