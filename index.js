@@ -37,7 +37,7 @@ app.use(redisClient);
 
 app.use('/api', userRouter);
 
-if (isDev != 'development') {
+if (isDev == 'production') {
 	app.use(express.static(path.join(__dirname, 'client/build')));
 	app.get('*', function(req, res) {
 		res.sendFile(path.resolve(__dirname, 'client/build/index.html'));
