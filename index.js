@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('./config');
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const redis = require('redis');
@@ -35,6 +36,8 @@ app.use(express.json());
 app.use(bodyParser.json())
 app.use(cors());
 app.use(redisClient);
+
+app.use(express.static(path.join(__dirname,  "client/build")));
 
 app.use('/api', userRouter);
 
