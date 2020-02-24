@@ -38,11 +38,12 @@ app.use(cors());
 app.use(redisClient);
 
 app.use(express.static(path.join(__dirname,  "client/build")));
+app.use('/api', userRouter);
 app.get('*', function(req, res) {
 	res.sendFile(path.resolve(__dirname, 'client/build/index.html'));
 });
 
-app.use('/api', userRouter);
+
 
 app.listen(5000, ()=> {
 	console.log("Server is listening....");
