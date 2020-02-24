@@ -6,10 +6,10 @@
   "scripts": {
     "test": " mocha --timeout 10000",
     "client-install": "npm install --prefix client",
-    "start": "nodemon index.js",
+    "start": "NODE_ENV='production' nodemon index.js",
     "server": "nodemon index.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \" npm run client\" "
+    "dev": "concurrently \"NODE_ENV='development' npm run server\" \" npm run client\" "
   },
   "keywords": [],
   "author": "",

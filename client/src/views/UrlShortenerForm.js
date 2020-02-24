@@ -44,11 +44,6 @@ class UrlShortenerForm extends Component{
 				error: true
 			})
 		}
-
-	}
-
-	componentWillReceiveProps(nextProps){
-		console.log(nextProps);
 	}
 
 	render(){
