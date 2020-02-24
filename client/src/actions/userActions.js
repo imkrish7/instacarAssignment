@@ -11,7 +11,7 @@ const apiRequest = (dispatch, params, url, requestType, successActions, loadingA
 	
 	let headers = { 'Content-Type': 'application/json' };
 
-	const defaultUrl = 'http://localhost:5000';
+	const defaultUrl = 'http://127.0.0.1:5000';
 
 	let reqObj = {
 		method: requestType,
