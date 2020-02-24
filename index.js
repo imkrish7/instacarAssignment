@@ -36,9 +36,9 @@ app.use(redisClient);
 
 
 app.use('/api', userRouter);
-if (isDev == undefined) {
-	app.use(express.static(path.join(__dirname, 'client/build')));
 
+if (isDev != 'development') {
+	app.use(express.static(path.join(__dirname, 'client/build')));
 	app.get('*', function(req, res) {
 		res.sendFile(path.resolve(__dirname, 'client/build/index.html'));
 	});
