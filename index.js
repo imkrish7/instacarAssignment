@@ -37,10 +37,10 @@ app.use(bodyParser.json())
 app.use(cors());
 app.use(redisClient);
 
-app.use(express.static(path.join(__dirname,  "client/build")));
-app.get('*', function(req, res) {
-	res.sendFile(path.resolve(__dirname, 'client/build/index.html'));
-});
+// app.use(express.static(path.join(__dirname,  "client/build")));
+// app.get('*', function(req, res) {
+// 	res.sendFile(path.resolve(__dirname, 'client/build/index.html'));
+// });
 
 app.use('/api', userRouter);
 
