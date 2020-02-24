@@ -19,12 +19,17 @@ router.post('/add',async (req,res)=>{
 		const ip_exist = await req.redis_client.getAsync(ip);	
 		if(ip_exist){
 			if(parseInt(ip_exist) == 100){
-				return res.status(400).send({success: false, data: { limit: true} });
+				return res.status(400).send({success: false, data: { limit: true ,msg: "Your limit is over"} });
 			}else{
 				
 				let url = await Url.findOne({ longUrl });
 				if(url){
-					return res.status(401).send({ success: false, data: { invalidUrl: true } });
+					return res
+						.status(400)
+						.send({
+							success: false,
+							data: { invalidUrl: true, msg: 'URL already exist' },
+						});
 				}else{
 					if(validUrl.isUri(longUrl)){
 						await req.redis_client.incrAsync(ip);
@@ -39,7 +44,7 @@ router.post('/add',async (req,res)=>{
 						newUrl.save();
 						return res.status(200).send({ success: true });
 					}else{
-						return res.status(401).send({success: false, data: {invalidUrl: true}});
+						return res.status(400).send({success: false, data: {invalidUrl: true, msg: "invalid url"}});
 					}
 				}
 			}
@@ -47,7 +52,7 @@ router.post('/add',async (req,res)=>{
 			
 			let url = await Url.findOne({ longUrl });
 				if(url){
-					return res.status(401).send({ success: false, data: { invalidUrl: true } });
+					return res.status(400).send({ success: false, data: { invalidUrl: true, msg: "URL already exist" } });
 				}else{	
 					if(validUrl.isUri(longUrl)){
 						
@@ -62,13 +67,13 @@ router.post('/add',async (req,res)=>{
 						newUrl.save();
 						return res.status(200).send({ success: true });
 					}else{
-						return res.status(401).send({success: false, data: {invalidUrl: true}});
+						return res.status(400).send({success: false, data: {invalidUrl: true, msg: "invalid url"}});
 					}
 				}
 		}
 	} catch (error) {
 		console.error(error);
-		return res.status(401).send({success: false, data: { msg: "Something went wrong"}});
+		return res.status(400).send({success: false, data: { msg: "Something went wrong"}});
 	}
 })
 

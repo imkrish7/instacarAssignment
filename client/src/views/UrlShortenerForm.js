@@ -71,8 +71,12 @@ class UrlShortenerForm extends Component{
 				{this.props.createLongUrlResponse.data && this.props.createLongUrlResponse.data.success && <Modal toggle={this.closeModal} isOpen={this.state.modal}>
 						{' '}<p className={Style.success}>Success</p>{' '}
 					</Modal>}
-				{this.props.createLongUrlResponse.error && this.props.createLongUrlResponse.error.data && !this.props.createLongUrlResponse.error.data.data.success && <Modal toggle={this.closeModal} isOpen={this.state.modal}>
-						{' '}<p className={Style.fail}>Something went Wrong</p>{' '}
+				{this.props.createLongUrlResponse.error && this.props.createLongUrlResponse.error.data && <Modal toggle={this.closeModal} isOpen={this.state.modal}>
+						{' '}<p className={Style.fail}>
+							{this.props.createLongUrlResponse.error &&
+								this.props.createLongUrlResponse.error.data &&
+								this.props.createLongUrlResponse.error.data.data.msg}
+						</p>{' '}
 					</Modal>}
 			</div>;
 	}

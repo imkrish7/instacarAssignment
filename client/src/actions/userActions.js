@@ -5,15 +5,15 @@ export const CREATE_LONG_URL = "CREATE_LONG_URL";
 export const GET_LONG_URL = "GET_LONG_URL";
 
 
-
-
 const apiRequest = (dispatch, params, url, requestType, successActions, loadingActions, errorActions) => {
 	
 	let headers = { 'Content-Type': 'application/json' };
+	let defaultUrl="";
+	if (process.env.NODE_ENV == 'development') {
+		defaultUrl = 'http://localhost:5000';
+	}
 
-	// const defaultUrl = 'http://127.0.0.1:5000';
-
-	let reqObj = { method: requestType, url: url, data: JSON.stringify(params), headers };
+	let reqObj = { method: requestType, url: defaultUrl + url, data: JSON.stringify(params), headers };
 
 	if(dispatch && loadingActions ) dispatch(loadingActions(true));
 
