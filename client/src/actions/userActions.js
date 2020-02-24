@@ -15,7 +15,7 @@ const apiRequest = (dispatch, params, url, requestType, successActions, loadingA
 
 	let reqObj = {
 		method: requestType,
-		url: defaultUrl + url,
+		url: url,
 		data: JSON.stringify(params),
 		headers
 	}
