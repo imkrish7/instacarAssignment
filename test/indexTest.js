@@ -25,7 +25,7 @@ describe("Server", ()=>{
 		it('It should give error', done => {
 			const newUrl = {};
 			chai.request(app).post('/api/add').send(newUrl).end((err, res) => {
-				assert.equal(res.status, 401);
+				assert.equal(res.status, 400);
 				assert.equal(res.body.success, false);
 				done();
 			});
@@ -49,7 +49,7 @@ describe("Server", ()=>{
 		it('It should give invalid url', done => {
 			let newUrl = { longUrl: 'www.mongodb.com', customUrl: '' };
 			chai.request(app).post('/api/add').send(newUrl).end((err, res) => {
-				assert.equal(res.status, 401);
+				assert.equal(res.status, 400);
 				assert.equal(res.body.success, false);
 				assert.equal(res.body.data.invalidUrl, true);
 				done();
@@ -57,10 +57,10 @@ describe("Server", ()=>{
 		});
 
 
-		it('It should give invalid url', done => {
+		it('It should give invalid url for url already exist', done => {
 			let newUrl = { longUrl: 'https://www.mongodb.com/', customUrl: '' };
 			chai.request(app).post('/api/add').send(newUrl).end((err, res) => {
-				assert.equal(res.status, 401);
+				assert.equal(res.status, 400);
 				assert.equal(res.body.success, false);
 				assert.equal(res.body.data.invalidUrl, true);
 				done();
